@@ -1,7 +1,8 @@
 'use strict';
 const express = require('express');
 const http = require('http');
-const { WebSocketServer } = require('ws');
+const WebSocket = require('ws')
+const WebSocketServer = WebSocket.Server;
 const Database = require('better-sqlite3');
 const crypto = require('crypto');
 const path = require('path');
@@ -120,7 +121,7 @@ app.get('/api/uptime', auth, (req, res) => {
 
 app.get('/health', (req, res) => res.json({ status: 'ok', service: 'opswatch', port: PORT }));
 
-app.get('*', (req, res) => {
+app.get('*splat', (req, res) => {
   if (fs.existsSync(path.join(distPath, 'index.html')))
     return res.sendFile(path.join(distPath, 'index.html'));
   res.json({ service: 'OpsWatch Unified', status: 'running', port: PORT });
